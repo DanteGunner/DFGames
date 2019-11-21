@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>DF Games - Carro de compra</title>
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <link href="css/shop-homepage.css" rel="stylesheet">
+    <link rel="stylesheet" href="../../static/css/estilos.css">
+    <script>
+        window.onload = function () {
+            // Variables
+            let baseDeDatos = [
+                {
+                    id: 1,
+                    nombre: 'God of War',
+                    precio: 29990
+                },
+                {
+                    id: 2,
+                    nombre: 'CTR Nitro Fueled',
+                    precio: 34990
+                },
+                {
+                    id: 3,
+                    nombre: 'Marvel´s Spider-man',
+                    precio: 34990
+                },
+                {
+                    id: 4,
+                    nombre: 'Far Cry 5',
+                    precio: 19990
+                },
+                {
+                    id: 5,
+                    nombre: 'Mortal Kombat 11',
+                    precio: 37990
+                },
+                {
+                    id: 6,
+                    nombre: 'Overwatch',
+                    precio: 19990
+                },
+                {
+                    id: 7,
+                    nombre: 'Battlefield V',
+                    precio: 24990
+                },
+                {
+                    id: 8,
+                    nombre: 'Rayman Legends',
+                    precio: 17990
+                },
+                {
+                    id: 9,
+                    nombre: 'Gears of War 5',
+                    precio: 44990
+                },
+                {
+                    id: 10,
+                    nombre: 'Dark Souls Remastered',
+                    precio: 29990
+                },
+                {
+                    id: 11,
+                    nombre: 'Sea of Thieves',
+                    precio: 44990
+                },
+                {
+                    id: 12,
+                    nombre: 'Titanfall 2',
+                    precio: 14990
+                },
+                {
+                    id: 13,
+                    nombre: 'Zelda: Breath Of The Wild',
+                    precio: 44990
+                },
+                {
+                    id: 14,
+                    nombre: 'Mario Kart 8 Deluxe',
+                    precio: 44990
+                },
+                {
+                    id: 15,
+                    nombre: 'Splatoon 2',
+                    precio: 44990
+                },
+                {
+                    id: 16,
+                    nombre: 'Super Smash Bros. Ultimate',
+                    precio: 44990
+                },
+                {
+                    id: 17,
+                    nombre: 'Pokemon Let´s Go Pikachu',
+                    precio: 44990
+                },
+                {
+                    id: 18,
+                    nombre: 'Super Mario Odyssey',
+                    precio: 44990
+                },
+                {
+                    id: 19,
+                    nombre: 'Cyberpunk 2077',
+                    precio: 54990
+                },
+                {
+                    id: 20,
+                    nombre: 'Pokémon Espada/Escudo',
+                    precio: 44990
+                },
+                {
+                    id: 21,
+                    nombre: 'Zelda: Link´s Awakening',
+                    precio: 44990
+                },
+                {
+                    id: 22,
+                    nombre: 'FIFA 20',
+                    precio: 44990
+                },
+                {
+                    id: 23,
+                    nombre: 'Call of Duty Modern Warfare',
+                    precio: 44990
+                },
+                {
+                    id: 24,
+                    nombre: 'Borderlands 3',
+                    precio: 44990
+                    
+                }
+            ]
+            let $items = document.querySelector('#items');
+            let carrito = [];
+            let total = 0;
+            let $carrito = document.querySelector('#carrito');
+            let $total = document.querySelector('#total');
+            
+            // Funciones
+            function renderItems () {
+                for (let info of baseDeDatos) {
+                    // Estructura
+                    let miNodo = document.createElement('div');
+                    miNodo.classList.add('card', 'col-sm-4');
+                    // Body
+                    let miNodoCardBody = document.createElement('div');
+                    miNodoCardBody.classList.add('card-body');
+                    // Titulo
+                    let miNodoTitle = document.createElement('h5');
+                    miNodoTitle.classList.add('card-title');
+                    miNodoTitle.textContent = info['nombre'];
+                    // Precio
+                    let miNodoPrecio = document.createElement('p');
+                    miNodoPrecio.classList.add('card-text');
+                    miNodoPrecio.textContent = info['precio'] + '$';
+                    // Boton 
+                    let miNodoBoton = document.createElement('button');
+                    miNodoBoton.classList.add('btn', 'btn-primary');
+                    miNodoBoton.textContent = '+';
+                    miNodoBoton.setAttribute('marcador', info['id']);
+                    miNodoBoton.addEventListener('click', anyadirCarrito);
+                    // Insertamos
+                    miNodoCardBody.appendChild(miNodoTitle);
+                    miNodoCardBody.appendChild(miNodoPrecio);
+                    miNodoCardBody.appendChild(miNodoBoton);
+                    miNodo.appendChild(miNodoCardBody);
+                    $items.appendChild(miNodo);
+                }
+            }
+            function anyadirCarrito () {
+                // Anyadimos el Nodo a nuestro carrito
+                carrito.push(this.getAttribute('marcador'))
+                // Calculo el total
+                calcularTotal();
+                // Renderizamos el carrito 
+                renderizarCarrito();
+
+            }
+
+            function renderizarCarrito () {
+                // Vaciamos todo el html
+                $carrito.textContent = '';
+                // Generamos los Nodos a partir de carrito
+                carrito.forEach(function (item, indice) {
+                    // Obtenemos el item que necesitamos de la variable base de datos
+                    let miItem = baseDeDatos.filter(function(itemBaseDatos) {
+                        return itemBaseDatos['id'] == item;
+                    });
+                    // Creamos el nodo del item del carrito
+                    let miNodo = document.createElement('li');
+                    miNodo.classList.add('list-group-item', 'text-right');
+                    miNodo.textContent = `${miItem[0]['nombre']} - ${miItem[0]['precio']}€`;
+                    // Boton de borrar
+                    let miBoton = document.createElement('button');
+                    miBoton.classList.add('btn', 'btn-danger', 'mx-5');
+                    miBoton.textContent = 'X';
+                    miBoton.setAttribute('posicion', indice);
+                    miBoton.addEventListener('click', borrarItemCarrito);
+                    // Mezclamos nodos
+                    miNodo.appendChild(miBoton);
+                    $carrito.appendChild(miNodo);
+                })
+            }
+
+            function borrarItemCarrito () {
+                // Obtenemos la posicion que hay en el boton pulsado
+                let posicion = this.getAttribute('posicion');
+                // Borramos la posicion que nos interesa
+                carrito.splice(posicion, 1);
+                // volvemos a renderizar
+                renderizarCarrito();
+                // Calculamos de nuevo el precio
+                calcularTotal();
+            }
+
+            function calcularTotal () {
+                // Limpiamos precio anterior
+                total = 0;
+                // Recorremos el array del carrito
+                for (let item of carrito) {
+                    // De cada elemento obtenemos su precio
+                    let miItem = baseDeDatos.filter(function(itemBaseDatos) {
+                        return itemBaseDatos['id'] == item;
+                    });
+                    total = total + miItem[0]['precio'];
+                }
+                // Formateamos el total para que solo tenga dos decimales
+                let totalDosDecimales = total.toFixed(2);
+                // Renderizamos el precio en el HTML
+                $total.textContent = totalDosDecimales;
+            }
+            // Eventos
+
+            // Inicio
+            renderItems();
+        } 
+    </script>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+        <div class="container">
+          <a class="navbar-brand" href="#">Carro de compra</a>
+          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarResponsive">
+            <ul class="navbar-nav ml-auto">
+              <li class="nav-item active">
+                <a class="nav-link" href="{% url 'index' %}">Inicio
+                  <span class="sr-only">(current)</span>
+                </a>
+              </li>
+              <li class="nav-item">
+                
+              </li>
+            </ul>
+          </div>
+        </div>
+    </nav>
+    <div class="col-lg-3">
+        <div class="list-group">
+            <a href="{% url 'index' %}" class="list-group-item">Volver</a>            
+        </div>        
+        <h1 class="my-4">Juegos disponibles: </h1>
+    </div>
+    <div class="container">
+        <div class="row">
+            <!-- Elementos generados a partir del JSON -->
+            <main id="items" class="col-sm-8 row"></main>
+            <!-- Carrito -->
+            <aside class="col-sm-4">
+                <h2>Carrito</h2>
+                <!-- Elementos del carrito -->
+                <ul id="carrito" class="list-group"></ul>
+                <hr>
+                <!-- Precio total -->
+                <p class="text-right">Total: &dollar;<span id="total"></span></p>
+                <a href="{% url 'Formulario' %}"><button class="pagar"  id="boton" name="Pagar">Pagar</button></a>
+            </aside>
+        </div>
+    </div>
+    <!-- Footer -->
+    <footer class="py-5 bg-dark">
+            <div class="container">    
+            <p class="text-white">
+                <strong>CONTACTO</strong> <br>
+                Email: contacto@dfgames.cl <br>
+                Teléfono: +56 2 2221 6850 <br>
+                Whatsapp: +56997139923 <br>
+            </p>
+            <p align="right" class="text-white">
+                <strong>SIGUENOS EN REDES SOCIALES</strong><br><br>
+                <a href="https://fb.com/dfgamescl"><img src="../../static/img/RRSS/Facebook.png" width="50" height="50"></a>
+                <a href="https://instagram.com/dfgamescl"><img src="../../static/img/RRSS/Instagram.png" width="50" height="50"></a>
+                <a href="https://twitter.com/dfgamescl"><img src="../../static/img/RRSS/Twitter.png" width="50" height="50"></a>
+            </p>
+            <p class="m-0 text-center text-white">&copy; 2015-2019 - DF Games</p>
+            </div>
+            <!-- /.container -->
+        </footer>
+    
+        <!-- Bootstrap core JavaScript -->
+        <script src="js/jquery.min.js"></script>
+        <script src="js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

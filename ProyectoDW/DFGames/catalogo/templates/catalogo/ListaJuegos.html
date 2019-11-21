@@ -1,0 +1,55 @@
+{% extends '../base_generic.html' %}
+
+{% block contenido %}
+<h4 class="card-title">
+                  <a href="#" class="form-label" e>Lista de Juegos</a>
+                </h4>
+                <table>
+                    <tr>
+                     <th>Titulo</th>
+	                 <th>Compañia</th>
+	                 <th>Fecha De Lanzamiento</th>
+	                 <th>Platamaforma</th>
+	                 <th>Descripcion</th>
+	                 <th>Idgame</th>
+	                 <th>Genero</th>
+                    </tr>
+
+                    {% for a in juego %}
+
+                    <tr>    
+                        <td>{{ a.title}}</td>
+                        <td>{{ a.company}}</td>
+                        <td>{{ a.fecha_lanzamiento}}</td>
+                        <td>{{ a.platform}}</td>
+                        <td>{{ a.descripcion}}</td>
+                        <td>{{ a.idgame}}</td>
+                        <td>{{ a.genre}}</td>   
+                        <td>
+                            <a href="{% url 'Eliminar_juego' a.id %}">Eliminar</a>
+                        </td>
+
+                    </tr>
+
+                    {% endfor %}   
+
+                    
+                </table>
+
+                {% if messages %}
+
+                    {%for m in messages%}   
+
+                        <div>{{ m }} </div>
+
+                    {%endfor%}
+                
+                {% else %}
+                {% endif %}
+
+              <div class="card-footer">
+                <p align="center"><a href="{% url 'AgregarJuego' %}"><button type="button">Añadir Juego</button></p></a>
+              </div>
+            </div>
+          </div>
+{% endblock contenido %}

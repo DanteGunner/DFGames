@@ -1,0 +1,8 @@
+Integrantes:
+Dante Vásquez
+Fernando Sotomayor
+
+User: DFGamesAdmin
+Password: yoelaba123
+
+Entorno virtual: Django_DFGames

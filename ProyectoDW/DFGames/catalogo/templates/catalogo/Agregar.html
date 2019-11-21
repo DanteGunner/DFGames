@@ -1,0 +1,52 @@
+{% extends "../base_generic.html" %}
+{% block contenido %}
+<h4 class="card-title">
+                  
+                
+
+              <div class="card-footer">
+                
+
+                <div class="contenedor">
+        <form action="index.html" name="formulario" method="GET" class="form">
+            <div class="form-header">
+                <h1 class="form-title">A<span>gregar Juegos</span></h1>
+            </div>
+
+
+            <label for="title" class="form-label">Titulo:</label>
+            <input type="text" id="title" class="form-input" placeholder="Escriba El titulo" required>
+
+            <label for="compañy" class="form-label">Compañia:</label>
+            <input type="text" id="compañy" class="form-input" placeholder="Escriba la compañia" required>
+
+            <label for="fecha_lanzamiento" class="form-label">Fecha de Lanzamiento:</label>
+            <input type="date" id="fecha_lanzamiento" class="form-input"  required> 
+
+            <label for="Platform" class="form-label">Plataforma:</label>
+            <input type="text" id="platform" class="form-input" placeholder="PlayStation 4" required> 
+
+            <label for="descripcion" class="form-label">Descripcion del Juego:</label>
+            <input type="text" id="descripcion" class="form-input" placeholder="..." required>
+
+            <label for="idgame" class="form-label">Id Del Juego:</label>
+            <input type="text" id="idgame" class="form-input" placeholder="juego123ABD" required>
+
+            <label for="genre" class="form-label">Genero:</label>
+            <select name="cboGenre" id="genre" class="form-input">
+                <option value="">Seleccionar</option>
+                    
+            </select>
+
+            <a href="{% url 'index' %}"><input type="submit"  class="btn-submit" value="Pagar" ></a>
+            <br>
+            
+        </form>
+        <br>
+         <p align="center"><a href="{% url 'ListaJuegos' %}"><button type="button">Ver Juegos</button></p></a>
+
+    </div>
+              </div>
+            </div>
+          </div>
+{% endblock contenido %}
